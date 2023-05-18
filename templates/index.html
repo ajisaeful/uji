@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deteksi Objek</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="container-deteksi">
+    <div class="upload-section">
+        <h1>Deteksi Objek</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <h2>Unggah Gambar:</h2>
+            <input type="file" name="image" accept="image/*">
+            <input type="submit" value="Deteksi Objek">
+        </form>
+        <br>
+        <form method="POST" enctype="multipart/form-data">
+            <h2>Unggah Video:</h2>
+            <input type="file" name="video" accept="video/*">
+            <input type="submit" value="Deteksi Objek">
+        </form>
+        <br>
+        <h2>Webcam:</h2>
+        <button id="start-webcam-btn" onclick="startWebcam()">Aktifkan Webcam</button>
+    </div>
+    
+    <div class="result-section">
+        <div id="webcam-preview">
+            <h2>Webcam Preview:</h2>
+            <canvas id="webcam-canvas" width="640" height="480"></canvas>
+            <video id="webcam-video" autoplay></video>
+        </div>
+        
+        <div class="deteksi">
+            <div id="result-container">
+                {% if result_path %}
+                    <h2>Hasil (Gambar):</h2>
+                    <img src="{{ url_for('static', filename='results/' + result_path) }}" alt="Gambar Hasil" style="max-width: 500px; max-height: 500px;">
+                {% endif %}
+
+                {% if result_video_path %}
+                    <h2>Hasil (Video):</h2>
+                    <video controls style="max-width: 500px; max-height: 500px;">
+                        <source src="{{ url_for('static', filename='results/' + result_video_path) }}" type="video/mp4">
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/webcame.js') }}"></script>
+</body>
+</html>
